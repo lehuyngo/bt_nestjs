@@ -1,5 +1,14 @@
-import { Controller, Delete, Get, Param } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Patch,
+  Post,
+} from '@nestjs/common';
 import { RunsService } from './runs.service';
+import { Run } from './runs.model';
 
 @Controller('runs')
 export class RunsController {
@@ -12,6 +21,19 @@ export class RunsController {
   @Get(':id')
   getRun(@Param('id') id: string) {
     return this.runsService.getRun(id);
+  }
+
+  @Post()
+  createRun(
+    @Body('time') time: number,
+    @Body('description') description: string,
+  ) {
+    return this.runsService.createRun(description, time);
+  }
+
+  @Patch(':id')
+  updateRun(@Param('id') id: string, dto: Run) {
+    return this.runsService.updateRun(id, dto);
   }
 
   @Delete(':id')
